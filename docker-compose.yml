@@ -1,0 +1,46 @@
+version: '3'
+services:
+  postgres_dbs:
+    image: 'postgres:alpine'
+    container_name: postgres_dbs
+    environment:
+        - POSTGRES_USER=raniaab
+        - POSTGRES_PASSWORD=rania7005
+        - POSTGRES_DB=mydbs
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres_dbs
+    env_file:
+      - "./backend/.env"
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports: 
+      - "80:80"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+
+volumes:
+  postgres_data:
