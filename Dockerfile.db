@@ -1,0 +1,7 @@
+# Dockerfile.db
+FROM postgres:alpine
+
+ENV POSTGRES_USER=raniaab \
+    POSTGRES_PASSWORD=rania7005 \
+    POSTGRES_DB=mydbs
+
