@@ -20,4 +20,4 @@ COPY --from=builder /app/main /app/
 USER 1000:1000
 
 EXPOSE 8080
-ENTRYPOINT ["./main"]
+ENTRYPOINT ["/app/main"]
