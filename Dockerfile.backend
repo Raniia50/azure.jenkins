@@ -10,19 +10,12 @@ COPY . .
 RUN go build -o main .
 
 # Stage 2: Create a small image for running the Go binary
-FROM scratch
+FROM alpine:latest  # Using Alpine for debugging purposes
 
 WORKDIR /app
-
-# Copy the Go binary from the builder stage
 COPY --from=builder /app/main /app/
 
-# Create necessary files and set up user (non-root)
-COPY --from=builder /etc/passwd /etc/group /etc/
-
-# Use a user with a known UID/GID
 USER 1000:1000
-
 EXPOSE 8080
 
 ENTRYPOINT ["/app/main"]
