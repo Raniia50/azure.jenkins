@@ -13,11 +13,16 @@ RUN go build -o main .
 FROM scratch
 
 WORKDIR /app
-COPY --from=builder /etc/passwd /etc/group /etc/
+
+# Copy the Go binary from the builder stage
 COPY --from=builder /app/main /app/
 
-# switch to non-root user
+# Create necessary files and set up user (non-root)
+COPY --from=builder /etc/passwd /etc/group /etc/
+
+# Use a user with a known UID/GID
 USER 1000:1000
 
 EXPOSE 8080
+
 ENTRYPOINT ["/app/main"]
