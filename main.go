@@ -64,7 +64,7 @@ func main() {
 	router.HandleFunc("/rows", postRowHandler).Methods("POST")
 	http.Handle("/", corsMiddleware(router))
 
-	log.Println("Server started at http://localhost:8080")
+	log.Println("Server started at http://backend-serv.playground.svc.cluster.local:8080/rows")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
